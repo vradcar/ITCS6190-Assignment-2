@@ -48,7 +48,7 @@ docker cp target/DocumentSimilarity-0.0.1-SNAPSHOT.jar resourcemanager:/opt/hado
 Copy your dataset file (e.g., `input.txt`) to the Hadoop ResourceManager container:
 
 ```bash
-docker cp <your-dataset-path> resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
+docker cp input.txt resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
 ```
 
 ### 5. **Connect to Docker Container**
@@ -71,7 +71,8 @@ hadoop fs -mkdir -p /input/data
 Copy the input dataset to the HDFS folder:
 
 ```bash
-hadoop fs -put ./<your-dataset-filename> /input/data
+cd /opt/hadoop-3.2.1/share/hadoop/mapreduce/
+hadoop fs -put input.txt /input/data
 ```
 
 ### 7. **Execute the MapReduce Job**
@@ -79,7 +80,7 @@ hadoop fs -put ./<your-dataset-filename> /input/data
 Run your MapReduce job (update the main class path if needed):
 
 ```bash
-hadoop jar /opt/hadoop-3.2.1/share/hadoop/mapreduce/DocumentSimilarity-0.0.1-SNAPSHOT.jar controller.DocumentSimilarityDriver /input/data/<your-dataset-filename> /output1
+hadoop jar /opt/hadoop-3.2.1/share/hadoop/mapreduce/DocumentSimilarity-0.0.1-SNAPSHOT.jar controller.DocumentSimilarityDriver /input/data/input.txt /output1
 ```
 
 ### 8. **View the Output**
