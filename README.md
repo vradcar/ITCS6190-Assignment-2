@@ -19,8 +19,6 @@
 
 ## Setup and Execution
 
-### ` Note: The below commands are the ones used for the Hands-on. You need to edit these commands appropriately towards your Assignment to avoid errors. `
-
 ### 1. **Start the Hadoop Cluster**
 
 Run the following command to start the Hadoop cluster:
@@ -37,37 +35,32 @@ Build the code using Maven:
 mvn clean package
 ```
 
-### 4. **Copy JAR to Docker Container**
+### 3. **Copy JAR to Docker Container**
 
-Copy the JAR file to the Hadoop ResourceManager container:
-
-```bash
-docker cp target/WordCountUsingHadoop-0.0.1-SNAPSHOT.jar resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
-```
-
-### 5. **Move Dataset to Docker Container**
-
-Copy the dataset to the Hadoop ResourceManager container:
+Copy the JAR file to the Hadoop ResourceManager container (update the JAR name if your version is different):
 
 ```bash
-docker cp shared-folder/input/data/input.txt resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
+docker cp target/DocumentSimilarity-0.0.1-SNAPSHOT.jar resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
 ```
 
-### 6. **Connect to Docker Container**
+### 4. **Move Dataset to Docker Container**
+
+Copy your dataset file (e.g., `input.txt`) to the Hadoop ResourceManager container:
+
+```bash
+docker cp <your-dataset-path> resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
+```
+
+### 5. **Connect to Docker Container**
 
 Access the Hadoop ResourceManager container:
 
 ```bash
 docker exec -it resourcemanager /bin/bash
-```
-
-Navigate to the Hadoop directory:
-
-```bash
 cd /opt/hadoop-3.2.1/share/hadoop/mapreduce/
 ```
 
-### 7. **Set Up HDFS**
+### 6. **Set Up HDFS**
 
 Create a folder in HDFS for the input dataset:
 
@@ -78,18 +71,18 @@ hadoop fs -mkdir -p /input/data
 Copy the input dataset to the HDFS folder:
 
 ```bash
-hadoop fs -put ./input.txt /input/data
+hadoop fs -put ./<your-dataset-filename> /input/data
 ```
 
-### 8. **Execute the MapReduce Job**
+### 7. **Execute the MapReduce Job**
 
-Run your MapReduce job using the following command: Here I got an error saying output already exists so I changed it to output1 instead as destination folder
+Run your MapReduce job (update the main class path if needed):
 
 ```bash
-hadoop jar /opt/hadoop-3.2.1/share/hadoop/mapreduce/WordCountUsingHadoop-0.0.1-SNAPSHOT.jar com.example.controller.Controller /input/data/input.txt /output1
+hadoop jar /opt/hadoop-3.2.1/share/hadoop/mapreduce/DocumentSimilarity-0.0.1-SNAPSHOT.jar controller.DocumentSimilarityDriver /input/data/<your-dataset-filename> /output1
 ```
 
-### 9. **View the Output**
+### 8. **View the Output**
 
 To view the output of your MapReduce job, use:
 
@@ -97,7 +90,7 @@ To view the output of your MapReduce job, use:
 hadoop fs -cat /output1/*
 ```
 
-### 10. **Copy Output from HDFS to Local OS**
+### 9. **Copy Output from HDFS to Local OS**
 
 To copy the output from HDFS to your local machine:
 
@@ -106,17 +99,14 @@ To copy the output from HDFS to your local machine:
     hdfs dfs -get /output1 /opt/hadoop-3.2.1/share/hadoop/mapreduce/
     ```
 
-2. use Docker to copy from the container to your local machine:
-   ```bash
-   exit 
-   ```
+2. Use Docker to copy from the container to your local machine:
     ```bash
+    exit
     docker cp resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/output1/ shared-folder/output/
     ```
-3. Commit and push to your repo so that we can able to see your output
 
+3. Commit and push to your repo so that we can see your output.
 
----
 
 ## Challenges and Solutions
 
