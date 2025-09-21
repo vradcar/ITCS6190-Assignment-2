@@ -1,8 +1,8 @@
 # Assignment 2: Document Similarity using MapReduce
 
-**Name:** 
+**Name:** Varad Paradkar
 
-**Student ID:** 
+**Student ID:** 801418318
 
 ## Approach and Implementation
 
@@ -102,6 +102,7 @@ To copy the output from HDFS to your local machine:
 2. Use Docker to copy from the container to your local machine:
     ```bash
     exit
+    mkdir -p shared-folder
     docker cp resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/output1/ shared-folder/output/
     ```
 
