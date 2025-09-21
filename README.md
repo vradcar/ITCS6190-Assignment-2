@@ -57,7 +57,6 @@ Access the Hadoop ResourceManager container:
 
 ```bash
 docker exec -it resourcemanager /bin/bash
-cd /opt/hadoop-3.2.1/share/hadoop/mapreduce/
 ```
 
 ### 6. **Set Up HDFS**
