@@ -40,10 +40,9 @@ public class DocumentSimilarityReducer extends Reducer<Text, Text, Text, Text> {
                 Set<String> union = new HashSet<>(setA);
                 union.addAll(setB);
                 double similarity = union.size() == 0 ? 0.0 : (double) intersection.size() / union.size();
-                // Standardized output: docId1,docId2\tSimilarity: x.xx
-                String outKey = docIds.get(i) + "," + docIds.get(j);
-                String outVal = String.format("Similarity: %.2f", similarity);
-                context.write(new Text(outKey), new Text(outVal));
+                // Output: Document1, Document2 Similarity: 0.56
+                String outLine = docIds.get(i) + ", " + docIds.get(j) + " Similarity: " + String.format("%.2f", similarity);
+                context.write(new Text(outLine), null);
             }
         }
     }
